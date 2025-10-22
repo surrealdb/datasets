@@ -1,0 +1,141 @@
+{
+    "datasets": [
+        {
+            "id": "surreal-deal-store",
+            "name": "Surreal Deal Store",
+            "description": "A sample dataset based on the real SurrealDB store made up of 12 tables. Uses graph relations and record links.",
+            "author": "SurrealDB",
+            "hidden": false,
+            "versions": [
+                {
+                    "id": "v2",
+                    "hidden": false,
+                    "minimumVersion": "2.0",
+                    "maximumVersion": "2.x",
+                    "sizes": {
+                        "standard": {
+                            "id": "standard",
+                            "hidden": false,
+                            "label": "Standard",
+                            "path": "datasets/surreal-deal-store/standard-v2.surql"
+                        },
+                        "mini": {
+                            "id": "mini",
+                            "hidden": false,
+                            "label": "Mini",
+                            "path": "datasets/surreal-deal-store/mini-v2.surql"
+                        }
+                    },
+                    "sampleQueries": [
+                        {
+                            "id": "record-links",
+                            "name": "Record links",
+                            "path": "datasets/surreal-deal-store/queries/query-1.surql"
+                        },
+                        {
+                            "id": "graph-relations",
+                            "name": "Graph relations",
+                            "path": "datasets/surreal-deal-store/queries/query-2.surql"
+                        },
+                        {
+                            "id": "conditional-filtering",
+                            "name": "Conditional filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-3.surql"
+                        },
+                        {
+                            "id": "relation-filtering",
+                            "name": "Relation filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-4.surql"
+                        },
+                        {
+                            "id": "counting",
+                            "name": "Counting",
+                            "path": "datasets/surreal-deal-store/queries/query-5.surql"
+                        },
+                        {
+                            "id": "unique-items",
+                            "name": "Unique items",
+                            "path": "datasets/surreal-deal-store/queries/query-6.surql"
+                        },
+                        {
+                            "id": "aggregation",
+                            "name": "Aggregation",
+                            "path": "datasets/surreal-deal-store/queries/query-7.surql"
+                        },
+                        {
+                            "id": "functions",
+                            "name": "Functions",
+                            "path": "datasets/surreal-deal-store/queries/query-8.surql"
+                        },
+                        {
+                            "id": "function-filtering",
+                            "name": "Function filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-9.surql"
+                        }
+                    ]
+                },
+                {
+                    "id": "v3",
+                    "hidden": true,
+                    "minimumVersion": "3.0",
+                    "maximumVersion": null,
+                    "sizes": {
+                        "mini": {
+                            "id": "mini",
+                            "hidden": false,
+                            "label": "Mini",
+                            "path": "datasets/surreal-deal-store/mini-v3.surql"
+                        }
+                    },
+                    "sampleQueries": [
+                        {
+                            "id": "record-links",
+                            "name": "Record links",
+                            "path": "datasets/surreal-deal-store/queries/query-1.surql"
+                        },
+                        {
+                            "id": "graph-relations",
+                            "name": "Graph relations",
+                            "path": "datasets/surreal-deal-store/queries/query-2.surql"
+                        },
+                        {
+                            "id": "conditional-filtering",
+                            "name": "Conditional filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-3.surql"
+                        },
+                        {
+                            "id": "relation-filtering",
+                            "name": "Relation filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-4.surql"
+                        },
+                        {
+                            "id": "counting",
+                            "name": "Counting",
+                            "path": "datasets/surreal-deal-store/queries/query-5.surql"
+                        },
+                        {
+                            "id": "unique-items",
+                            "name": "Unique items",
+                            "path": "datasets/surreal-deal-store/queries/query-6.surql"
+                        },
+                        {
+                            "id": "aggregation",
+                            "name": "Aggregation",
+                            "path": "datasets/surreal-deal-store/queries/query-7.surql"
+                        },
+                        {
+                            "id": "functions",
+                            "name": "Functions",
+                            "path": "datasets/surreal-deal-store/queries/query-8.surql"
+                        },
+                        {
+                            "id": "function-filtering",
+                            "name": "Function filtering",
+                            "path": "datasets/surreal-deal-store/queries/query-9.surql"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
