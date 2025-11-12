@@ -13,7 +13,6 @@
                 "id": "v2",
                 "hidden": false,
                 "minimumVersion": "2.0",
-                "maximumVersion": "2.x",
                 "sizes": [
                     {
                         "id": "standard",
@@ -80,7 +79,6 @@
                 "id": "v3",
                 "hidden": true,
                 "minimumVersion": "3.0",
-                "maximumVersion": null,
                 "sizes": [
                     {
                         "id": "mini",
@@ -152,7 +150,6 @@
                 "id": "v2",
                 "hidden": false,
                 "minimumVersion": "2.0",
-                "maximumVersion": "2.x",
                 "sampleQueries": [
                     {
                         "id": "surrealql-basics",
@@ -175,7 +172,6 @@
                 "id": "v3",
                 "hidden": false,
                 "minimumVersion": "3.0",
-                "maximumVersion": null,
                 "sampleQueries": [
                     {
                         "id": "surrealql-basics",
