@@ -23,4 +23,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
       
       - name: Deploy to S3
-        run: aws s3 sync --exclude ".git*" --exclude ".DS_Store" --exclude "*.md" --delete s3://datasets.surrealdb.com
+        run: aws s3 sync . s3://datasets.surrealdb.com --exclude ".git*" --exclude ".DS_Store" --exclude "*.md" --delete
