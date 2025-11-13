@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    name: Deploying datasets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Information
+        run: echo "Deploying datasets update"
+
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AMAZON_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
+      
+      - name: Deploy to S3
+        run: aws s3 sync --delete s3://datasets.surrealdb.com --exclude ".git*" --exclude ".DS_Store" --exclude "*.md"
