@@ -1,0 +1,23 @@
+{
+  "name": "datasets",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+	"authors": [
+		"SurrealDB"
+	],
+  "scripts": {
+    "compile": "bun run index.ts",
+    "qc": "biome check index.ts",
+    "qa": "biome check index.ts --write --formatter-enabled=true",
+    "qau": "biome check index.ts --write --unsafe --formatter-enabled=true"
+
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+		"@biomejs/biome": "2.1.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
