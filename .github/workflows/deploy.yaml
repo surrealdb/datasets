@@ -5,8 +5,8 @@ on:
     branches: ["main"]
 
 jobs:
-  deploy:
-    name: Deploying datasets
+  publish:
+    name: Publish to S3
     runs-on: ubuntu-latest
     steps:
       - name: Information
@@ -23,4 +23,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
       
       - name: Deploy to S3
-        run: aws s3 sync . s3://datasets.surrealdb.com --exclude ".git*" --exclude ".DS_Store" --exclude "*.md" --delete
+        run: |
+          bun qc
+          bun compile
+          aws s3 sync dist s3://datasets.surrealdb.com --delete
