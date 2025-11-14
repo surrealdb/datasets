@@ -5,8 +5,8 @@ on:
     branches: ["main"]
 
 jobs:
-  deploy:
-    name: Deploying datasets
+  publish:
+    name: Publish to S3
     runs-on: ubuntu-latest
     steps:
       - name: Information
