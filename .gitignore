@@ -1,6 +1,7 @@
 .DS_Store
 .idea/
 .env
+.cursor/
 node_modules/
 dist/
 out/
