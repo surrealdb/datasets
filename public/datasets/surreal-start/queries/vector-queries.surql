@@ -33,7 +33,7 @@ SELECT
     FROM documents
     WHERE embedding <|2|> $vector;
 
--- This shows the index, in the `indexes` attribute
+-- This shows the index, in the 'indexes' attribute
 -- INFO FOR TABLE documents;
 
 
