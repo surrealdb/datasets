@@ -1,10 +1,4 @@
-import {
-	cpSync,
-	existsSync,
-	mkdirSync,
-	rmdirSync,
-	writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 
 interface Dataset {
 	id: string;
@@ -234,18 +228,12 @@ const datasets: Dataset[] = [
 
 console.log("Building datasets...");
 
-if (existsSync("dist")) {
-	console.log("Dist directory already exists... removing dist directory...");
-	rmdirSync("dist", { recursive: true });
+if (!existsSync("out")) {
+	console.log("Creating output directory...");
+	mkdirSync("out");
 }
 
-console.log("Creating dist directory...");
-mkdirSync("dist");
-
-console.log("Copying public data to dist directory...");
-cpSync("public", "dist", { recursive: true });
-
-console.log("Writing datasets.json to dist directory...");
-writeFileSync("dist/datasets.json", JSON.stringify(datasets, null, 4));
+console.log("Writing datasets.json to output directory...");
+writeFileSync("out/datasets.json", JSON.stringify(datasets, null, 4));
 
 console.log("Done!");

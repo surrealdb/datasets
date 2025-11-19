@@ -31,4 +31,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
       
       - name: Deploy to S3
-        run: aws s3 sync dist s3://datasets.surrealdb.com --delete
+        run: |
+          aws s3 sync public s3://datasets.surrealdb.com --delete --cache-control "public, max-age=1800"
+          aws s3 cp out/datasets.json s3://datasets.surrealdb.com/datasets.json --cache-control "public, max-age=300"
