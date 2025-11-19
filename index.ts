@@ -13,7 +13,7 @@ interface Dataset {
 	author: string;
 	hidden: boolean;
 	showForDeploy: boolean;
-	versions?: Version[];
+	versions: Version[];
 }
 
 interface Version {
@@ -53,17 +53,17 @@ const datasets: Dataset[] = [
 				minimumVersion: "2.0",
 				sizes: [
 					{
-						id: "standard",
-						hidden: true,
-						label: "Standard",
-						path: "datasets/surreal-deal-store/standard-v2.surql",
-					},
-					{
 						id: "mini",
 						hidden: false,
 						label: "Mini",
 						path: "datasets/surreal-deal-store/mini-v2.surql",
 					},
+					// {
+					// 	id: "standard",
+					// 	hidden: true,
+					// 	label: "Standard",
+					// 	path: "datasets/surreal-deal-store/standard-v2.surql",
+					// },
 				],
 				sampleQueries: [
 					{
