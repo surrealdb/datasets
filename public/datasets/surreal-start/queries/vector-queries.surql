@@ -6,7 +6,7 @@
 };
 
 -- Vector index
--- Reference: https://surrealdb.com/docs/surrealdb/reference-guide/vector-search
+-- Reference: https://surrealdb.com/docs/surrealdb/models/vector
 DEFINE INDEX IF NOT EXISTS documents_vec_index
     ON TABLE documents
     FIELDS embedding
