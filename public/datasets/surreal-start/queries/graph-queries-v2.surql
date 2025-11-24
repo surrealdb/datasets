@@ -30,6 +30,10 @@ SELECT *, <-in_category<-document AS docs FROM category;
 SELECT *, <-has_tag<-document AS docs FROM tag;
 
 "Container relations:";
+-- Hint to visualize the graph:
+-- 1. Select the query below
+-- 2. Click "Run selection"
+-- 3. Change "Combined" to "Graph"
 SELECT *, <->stored_in AS relations FROM container FETCH relations;
 
 "Related nodes by document:";
@@ -91,5 +95,5 @@ SELECT @.{1..6}.{
                 (->edge->a[?bool]);
 };
 
-// To learn more about graph queries go to Chapter 8 in Aeon's Surreal
-// Renaissance book: https://surrealdb.com/learn/book/chapter-08
+// To learn more about graph queries, go to the Using SurrealDB as a Graph Database page:
+// https://surrealdb.com/docs/surrealdb/models/graph

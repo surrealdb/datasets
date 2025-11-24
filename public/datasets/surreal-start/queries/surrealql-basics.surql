@@ -8,7 +8,7 @@
 --  'Y8888P'   'Y88888 888     888      'Y8888  'Y888888 888 8888888P'  8888888P'
 --
 -- Welcome to SurrealDB, a multi-model database combining document, graph,
--- reltional, time-series and vector capabilities in one system, all powered
+-- relational, time-series and vector capabilities in one system, all powered
 -- by SurrealQL. Use it to build AI agents, real-time and event-driven systems,
 -- knowledge graphs, as a backend, a BaaS, or embed it directly into your apps
 -- One engine, every model.
