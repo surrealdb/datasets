@@ -7,11 +7,10 @@
 
 -- Vector index
 -- Reference: https://surrealdb.com/docs/surrealdb/models/vector
-DEFINE INDEX IF NOT EXISTS documents_vec_index
+DEFINE INDEX OVERWRITE documents_vec_index
     ON TABLE documents
     FIELDS embedding
-    MTREE DIMENSION 4 DIST COSINE TYPE F32
-    CONCURRENTLY;
+    HNSW DIMENSION 4 DIST COSINE TYPE F32;
 
 -- Add some documents with their embeddings
 {
@@ -31,7 +30,7 @@ SELECT
     // vector::similarity::cosine(embedding, $vector) AS similarity
     OMIT embedding // ignore the embedding in the result
     FROM documents
-    WHERE embedding <|2|> $vector;
+    WHERE embedding <|2,40|> $vector;
 
 -- This shows the index, in the 'indexes' attribute
 -- INFO FOR TABLE documents;
@@ -43,12 +42,12 @@ SELECT
 
 
 DEFINE FUNCTION OVERWRITE fn::search($vector: array<float>) {
-	RETURN SELECT
-    *,
-    (1 - vector::distance::knn()) AS score
+    RETURN SELECT
+        *,
+        (1 - vector::distance::knn()) AS score
     OMIT embedding
     FROM documents
-    WHERE embedding <|2|> $vector;
+    WHERE embedding <|2,40|> $vector;
 };
 
 RETURN fn::search([1f, 2f, 3f, 4f]);
