@@ -52,12 +52,12 @@ const datasets: Dataset[] = [
 						label: "Mini",
 						path: "datasets/surreal-deal-store/mini-v2.surql",
 					},
-					// {
-					// 	id: "standard",
-					// 	hidden: true,
-					// 	label: "Standard",
-					// 	path: "datasets/surreal-deal-store/standard-v2.surql",
-					// },
+					{
+						id: "standard",
+						hidden: false,
+						label: "Standard",
+						path: "datasets/surreal-deal-store/standard-v2.surql",
+					},
 				],
 				sampleQueries: [
 					{
@@ -117,6 +117,12 @@ const datasets: Dataset[] = [
 						hidden: false,
 						label: "Mini",
 						path: "datasets/surreal-deal-store/mini-v3.surql",
+					},
+					{
+						id: "standard",
+						hidden: false,
+						label: "Standard",
+						path: "datasets/surreal-deal-store/standard-v3.surql",
 					},
 				],
 				sampleQueries: [
