@@ -1,3 +1,10 @@
+-- ==============================
+-- Name: surreal-deal-store
+-- Description: A sample dataset based on the real SurrealDB store made up of 12 tables. Uses graph relations and record links.
+-- Exported: 2026-04-02T14:30:00Z
+-- SurrealDB: 2.0.0
+-- ==============================
+
 -- ------------------------------
 -- OPTION
 -- ------------------------------
