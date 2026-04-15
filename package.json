@@ -3,21 +3,25 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
-	"authors": [
-		"SurrealDB"
-	],
+  "authors": [
+    "SurrealDB"
+  ],
   "scripts": {
     "compile": "bun run index.ts",
-    "qc": "biome check index.ts",
-    "qa": "biome check index.ts --write --formatter-enabled=true",
-    "qau": "biome check index.ts --write --unsafe --formatter-enabled=true"
-
+    "test": "bun test",
+    "validate": "surreal validate public/**/*.surql",
+    "qc": "biome check index.ts tests/",
+    "qa": "biome check index.ts tests/ --write --formatter-enabled=true",
+    "qau": "biome check index.ts tests/ --write --unsafe --formatter-enabled=true"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@surrealdb/node": "^3.0.3",
     "@types/bun": "latest",
-		"@biomejs/biome": "2.1.2"
+	"@types/node": "25.6.0",
+    "surrealdb": "^2.0.3"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^6.0.2"
   }
 }

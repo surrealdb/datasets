@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 
-interface Dataset {
+export interface Dataset {
 	id: string;
 	label: string;
 	description: string;
@@ -10,7 +10,7 @@ interface Dataset {
 	versions: Version[];
 }
 
-interface Version {
+export interface Version {
 	id: string;
 	hidden: boolean;
 	minimumVersion: string;
@@ -18,20 +18,20 @@ interface Version {
 	sampleQueries?: Query[];
 }
 
-interface Query {
+export interface Query {
 	id: string;
 	label: string;
 	path: string;
 }
 
-interface Size {
+export interface Size {
 	id: string;
 	hidden: boolean;
 	label: string;
 	path: string;
 }
 
-const datasets: Dataset[] = [
+export const datasets: Dataset[] = [
 	{
 		id: "surreal-deal-store",
 		label: "Surreal Deal Store",
@@ -232,14 +232,16 @@ const datasets: Dataset[] = [
 	},
 ];
 
-console.log("Building datasets...");
+if (import.meta.main) {
+	console.log("Building datasets...");
 
-if (!existsSync("out")) {
-	console.log("Creating output directory...");
-	mkdirSync("out");
+	if (!existsSync("out")) {
+		console.log("Creating output directory...");
+		mkdirSync("out");
+	}
+
+	console.log("Writing datasets.json to output directory...");
+	writeFileSync("out/datasets.json", JSON.stringify(datasets, null, 4));
+
+	console.log("Done!");
 }
-
-console.log("Writing datasets.json to output directory...");
-writeFileSync("out/datasets.json", JSON.stringify(datasets, null, 4));
-
-console.log("Done!");
