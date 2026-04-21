@@ -127,4 +127,4 @@ WHERE embedding <|5,50|> $query_retrieval
 ORDER BY distance ASC;
 
 // To learn more about vector search in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealdb/models/vector
+// https://surrealdb.com/docs/learn/data-models/vector-search/overview

@@ -344,7 +344,7 @@ api::invoke("/search", { body: { query: "" } });
 INFO FOR DB;
 
 // To learn more about DEFINE FUNCTION in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealql/statements/define/function
+// https://surrealdb.com/docs/reference/query-language/statements/define/function
 //
 // To learn more about DEFINE API in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealql/statements/define/api
+// https://surrealdb.com/docs/reference/query-language/statements/define/api

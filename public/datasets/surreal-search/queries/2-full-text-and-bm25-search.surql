@@ -141,4 +141,4 @@ WHERE content @0@ "hash"
 ORDER BY content_score DESC;
 
 // To learn more about full-text search in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealql/statements/define/indexes
+// https://surrealdb.com/docs/reference/query-language/statements/define/indexes

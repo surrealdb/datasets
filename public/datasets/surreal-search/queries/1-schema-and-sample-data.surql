@@ -250,4 +250,4 @@ CREATE section:relate_traversal CONTENT {
 };
 
 // To learn more about the search schema used here, see:
-// https://surrealdb.com/docs/surrealql/statements/define/indexes
+// https://surrealdb.com/docs/reference/query-language/statements/define/indexes

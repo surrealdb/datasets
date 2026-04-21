@@ -10,7 +10,7 @@
 --                      records in the database, support custom
 --                      signup/signin logic and fine-grained permissions.
 --
--- Learn more: https://surrealdb.com/docs/surrealdb/security/authentication
+-- Learn more: https://surrealdb.com/docs/learn/security/authentication/authentication
 -- ------------------------------------------------------------
 
 
@@ -296,4 +296,4 @@ SELECT * FROM $auth;
 SELECT exp FROM $session;
 
 // To learn more about authentication in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealdb/security/authentication
+// https://surrealdb.com/docs/learn/security/authentication/authentication

@@ -127,4 +127,4 @@ SELECT id, title FROM page ORDER BY id;
 SELECT id, title FROM section WHERE page = page:relate;
 
 // To learn more about UPSERT in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealql/statements/upsert
+// https://surrealdb.com/docs/reference/query-language/statements/upsert

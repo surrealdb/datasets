@@ -202,4 +202,4 @@ SELECT title, distance FROM $page_vs ORDER BY distance ASC;
 SELECT title, rrf_score FROM $fused ORDER BY rrf_score DESC;
 
 // To learn more about hybrid search and RRF in SurrealDB, visit:
-// https://surrealdb.com/docs/surrealdb/models/full-text-search
+// https://surrealdb.com/docs/learn/data-models/full-text-search/overview
