@@ -253,6 +253,14 @@ const datasets: Dataset[] = [
 				id: "v3",
 				hidden: false,
 				minimumVersion: "3.0",
+				sizes: [
+					{
+						id: "standard",
+						hidden: false,
+						label: "Standard",
+						path: "datasets/surreal-search/queries/1-schema-and-sample-data.surql"
+					}	
+				],
 				sampleQueries: [
 					{
 						id: "schema-and-sample-data",
