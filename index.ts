@@ -258,8 +258,8 @@ const datasets: Dataset[] = [
 						id: "standard",
 						hidden: false,
 						label: "Standard",
-						path: "datasets/surreal-search/queries/1-schema-and-sample-data.surql"
-					}	
+						path: "datasets/surreal-search/queries/1-schema-and-sample-data.surql",
+					},
 				],
 				sampleQueries: [
 					{
