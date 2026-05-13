@@ -82,7 +82,7 @@ DEFINE FIELD payment_method ON order TYPE string ASSERT $value != NONE;
 DEFINE FIELD price ON order TYPE number ASSERT $value != NONE;
 DEFINE FIELD product_name ON order TYPE string ASSERT $value != NONE;
 DEFINE FIELD quany ON order TYPE number ASSERT $value != NONE;
-DEFINE FIELD shipping_address ON order FLEXIBLE TYPE object ASSERT $value != NONE;
+DEFINE FIELD shipping_address ON order TYPE object FLEXIBLE ASSERT $value != NONE;
 
 -- ------------------------------
 -- TABLE: person

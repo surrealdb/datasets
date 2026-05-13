@@ -59,7 +59,7 @@ DEFINE TABLE user SCHEMAFULL
 
 DEFINE FIELD name    ON TABLE user          TYPE string;
 DEFINE FIELD pass    ON TABLE user          TYPE string;
-DEFINE FIELD actions ON TABLE user FLEXIBLE TYPE option<array<object>>;
+DEFINE FIELD actions ON TABLE user TYPE option<array<object>> FLEXIBLE;
 
 DEFINE INDEX unique_name ON TABLE user FIELDS name UNIQUE;
 
