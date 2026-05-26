@@ -2,7 +2,7 @@
 {
     DEFINE TABLE documents;
     DEFINE FIELD text ON documents TYPE string;
-    DEFINE FIELD embedding ON documents TYPE array<float, 4>;
+    DEFINE FIELD embedding ON documents TYPE array<float>;
 };
 
 -- Vector index
