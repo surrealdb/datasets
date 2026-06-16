@@ -109,7 +109,7 @@ const datasets: Dataset[] = [
 			},
 			{
 				id: "v3",
-				hidden: true,
+				hidden: false,
 				minimumVersion: "3.0",
 				sizes: [
 					{
