@@ -1,6 +1,3 @@
-remove table citizen;
-remove table country;
-
 DEFINE TABLE country    TYPE NORMAL SCHEMAFULL PERMISSIONS NONE;
 DEFINE FIELD name ON TABLE country TYPE string;
 DEFINE INDEX unique_country ON TABLE country FIELDS name UNIQUE;

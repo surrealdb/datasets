@@ -21,8 +21,8 @@ DEFINE FIELD title             ON TABLE movie TYPE string;
 DEFINE FIELD average_rating    ON TABLE movie VALUE math::mean([$this.imdb_rating, $this.metacritic_rating, $this.rt_rating][WHERE $this IS NOT NONE]);
 
 DEFINE ANALYZER movie_fts TOKENIZERS class FILTERS ascii, lowercase, edgengram(2,10);
-DEFINE INDEX plot_index ON TABLE movie FIELDS plot SEARCH ANALYZER movie_fts BM25 HIGHLIGHTS;
-DEFINE INDEX title_index ON TABLE movie FIELDS title SEARCH ANALYZER movie_fts BM25;
+DEFINE INDEX plot_index ON TABLE movie FIELDS plot FULLTEXT ANALYZER movie_fts BM25 HIGHLIGHTS;
+DEFINE INDEX title_index ON TABLE movie FIELDS title FULLTEXT ANALYZER movie_fts BM25;
 
 DEFINE FUNCTION fn::date_to_datetime($input: string) -> datetime {
     LET $split = $input.split(' ');
@@ -4550,7 +4550,7 @@ FOR $data IN (SELECT * FROM naive_movie) {
 		imdb_rating = fn::get_imdb($data.Ratings),
 		languages = $data.Language.split(', '),
 		metacritic_rating = fn::get_metacritic($data.Ratings),
-		oscars_won = fn::get_oscars(awards),
+		oscars_won = fn::get_oscars($data.Awards),
         plot = $data.Plot,
         poster = $data.Poster,
         rated = $data.Rated,

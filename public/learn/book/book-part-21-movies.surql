@@ -70,8 +70,8 @@ DEFINE ACCESS account ON DATABASE TYPE RECORD
 
 // Full text search
 DEFINE ANALYZER movie_fts TOKENIZERS class FILTERS ascii, lowercase, edgengram(2,10);
-DEFINE INDEX plot_index  ON TABLE movie FIELDS plot  SEARCH ANALYZER movie_fts BM25 HIGHLIGHTS;
-DEFINE INDEX title_index ON TABLE movie FIELDS title SEARCH ANALYZER movie_fts BM25;
+DEFINE INDEX plot_index  ON TABLE movie FIELDS plot  FULLTEXT ANALYZER movie_fts BM25 HIGHLIGHTS;
+DEFINE INDEX title_index ON TABLE movie FIELDS title FULLTEXT ANALYZER movie_fts BM25;
 
 // Events
 DEFINE EVENT soft_deletion ON TABLE movie WHEN $event = "DELETE" THEN {
@@ -4630,7 +4630,7 @@ INSERT INTO naive_movie [
 ] RETURN NONE;
 
 FOR $data in (SELECT * FROM naive_movie) {
-    LET $movie = CREATE ONLY movie SET
+    LET $movie = CREATE movie SET
         awards = $data.Awards,
 		box_office = IF $data.BoxOffice = 'N/A' { NONE } ELSE { <int>$data.BoxOffice.replace('$', '').replace(',', '') },
 		dvd_released = IF $data.DVD = 'N/A' { NONE } ELSE { fn::date_to_datetime($data.DVD) },
@@ -4638,7 +4638,7 @@ FOR $data in (SELECT * FROM naive_movie) {
 		imdb_rating = fn::get_imdb($data.Ratings),
 		languages = $data.Language.split(', '),
 		metacritic_rating = fn::get_metacritic($data.Ratings),
-		oscars_won = fn::get_oscars(awards),
+		oscars_won = fn::get_oscars($data.Awards),
         plot = $data.Plot,
         poster = $data.Poster,
         rated = $data.Rated,
@@ -4650,7 +4650,7 @@ FOR $data in (SELECT * FROM naive_movie) {
     FOR $name IN $data.Actors.split(", ") {
 	LET $actor = (SELECT * FROM ONLY person WHERE name = $name LIMIT 1);
 	LET $actor = IF $actor IS NONE {
-		(CREATE ONLY person SET name = $name, roles += "actor")
+		(CREATE person SET name = $name, roles += "actor")
 	} ELSE {
 		IF "actor" NOT IN $actor.roles {
 			UPDATE $actor SET roles += "actor"
@@ -4663,7 +4663,7 @@ FOR $data in (SELECT * FROM naive_movie) {
     FOR $name IN $data.Director.split(", ") {
 	LET $director = (SELECT * FROM ONLY person WHERE name = $name LIMIT 1);
 	LET $director = IF $director IS NONE {
-		(CREATE ONLY person SET name = $name, roles += "director")
+		(CREATE person SET name = $name, roles += "director")
 	} ELSE {
 		IF "director" NOT IN $director.roles {
 			UPDATE $director SET roles += "director"
@@ -4676,7 +4676,7 @@ FOR $data in (SELECT * FROM naive_movie) {
     FOR $name IN $data.Writer.split(", ") {
 	LET $writer = (SELECT * FROM ONLY person WHERE name = $name LIMIT 1);
 	LET $writer = IF $writer IS NONE {
-		(CREATE ONLY person SET name = $name, roles += "actor")
+		(CREATE person SET name = $name, roles += "actor")
 	} ELSE {
 		IF "writer" NOT IN $writer.roles {
 			UPDATE $writer SET roles += "writer"
@@ -4689,7 +4689,7 @@ FOR $data in (SELECT * FROM naive_movie) {
 	FOR $name IN $data.Country.split(", ") {
 	LET $country = (SELECT * FROM ONLY country WHERE name = $name LIMIT 1);
 	LET $country = IF $country IS NONE {
-		(CREATE ONLY country SET name = $name)
+		(CREATE country SET name = $name)
 	} ELSE {
 		$country
 	};

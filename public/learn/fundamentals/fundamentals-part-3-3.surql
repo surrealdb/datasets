@@ -130,27 +130,16 @@ DEFINE FIELD id
 DEFINE FIELD person 
     ON TABLE address_history 
     TYPE record<person> REFERENCE;
-DEFINE FIELD addresses 
-    ON TABLE address_history 
-    TYPE array<object>;
-DEFINE FIELD addresses.*.address_line_1 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.address_line_2 
-    ON TABLE address_history 
-    TYPE option<string>;
-DEFINE FIELD addresses.*.city 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.coordinates 
-    ON TABLE address_history 
-    TYPE geometry<point>;
-DEFINE FIELD addresses.*.country 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.post_code 
-    ON TABLE address_history 
-    TYPE string;
+DEFINE FIELD addresses
+    ON TABLE address_history
+    TYPE array<{
+        address_line_1: string,
+        address_line_2: option<string>,
+        city: string,
+        coordinates: geometry<point>,
+        country: string,
+        post_code: string
+    }>;
 DEFINE FIELD time 
     ON TABLE address_history 
     TYPE object;

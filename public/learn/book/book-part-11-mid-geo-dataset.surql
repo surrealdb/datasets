@@ -91,20 +91,20 @@ RELATE $begin->to->$end
     slope = $trip.slope,
     distance = geo::distance($begin.location, $end.location),
     speed_modifier = 
-        (IF     crookedness = "straight"     { 1.0 }
-        ELSE IF crookedness = "crooked"      { 0.8 }
-        ELSE IF crookedness = "very crooked" { 0.5 })
+        (IF     $trip.crookedness = "straight"     { 1.0 }
+        ELSE IF $trip.crookedness = "crooked"      { 0.8 }
+        ELSE IF $trip.crookedness = "very crooked" { 0.5 })
         *
-        (IF     slope = "flat"               { 1.0 }
-        ELSE IF slope = "up"                 { 0.8 }
-        ELSE IF slope = "down"               { 1.2 }
-        ELSE IF slope = "steep"              { 0.5 }        
+        (IF     $trip.slope = "flat"               { 1.0 }
+        ELSE IF $trip.slope = "up"                 { 0.8 }
+        ELSE IF $trip.slope = "down"               { 1.2 }
+        ELSE IF $trip.slope = "steep"              { 0.5 }        
         )
         *
-        (IF terrain = "road"                 { 1.2 }
-        ELSE IF terrain = "normal"           { 1.0 }
-        ELSE IF terrain = "hard"             { 0.7 }
-        ELSE IF terrain = "water"            { 1.0 }
+        (IF $trip.terrain = "road"                 { 1.2 }
+        ELSE IF $trip.terrain = "normal"           { 1.0 }
+        ELSE IF $trip.terrain = "hard"             { 0.7 }
+        ELSE IF $trip.terrain = "water"            { 1.0 }
         )
         ,
     // if land, then 20 km per day * modifier

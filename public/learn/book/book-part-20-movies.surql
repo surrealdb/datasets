@@ -38,8 +38,8 @@ DEFINE TABLE has_movie  TYPE RELATION FROM country TO movie;
 
 // Full text search
 DEFINE ANALYZER movie_fts TOKENIZERS class FILTERS ascii, lowercase, edgengram(2,10);
-DEFINE INDEX plot_index  ON TABLE movie FIELDS plot  SEARCH ANALYZER movie_fts BM25 HIGHLIGHTS;
-DEFINE INDEX title_index ON TABLE movie FIELDS title SEARCH ANALYZER movie_fts BM25;
+DEFINE INDEX plot_index  ON TABLE movie FIELDS plot  FULLTEXT ANALYZER movie_fts BM25 HIGHLIGHTS;
+DEFINE INDEX title_index ON TABLE movie FIELDS title FULLTEXT ANALYZER movie_fts BM25;
 
 // Events
 DEFINE EVENT soft_deletion ON TABLE movie WHEN $event = "DELETE" THEN {
@@ -4579,7 +4579,7 @@ FOR $data in (SELECT * FROM naive_movie) {
 		imdb_rating = fn::get_imdb($data.Ratings),
 		languages = $data.Language.split(', '),
 		metacritic_rating = fn::get_metacritic($data.Ratings),
-		oscars_won = fn::get_oscars(awards),
+		oscars_won = fn::get_oscars($data.Awards),
         plot = $data.Plot,
         poster = $data.Poster,
         rated = $data.Rated,
