@@ -195,7 +195,7 @@ DEFINE ACCESS oidc_provider ON DATABASE TYPE JWT
             THROW "Invalid token issuer"
         };
         -- Verify the audience claim contains our service identifier
-        IF type::is::array($token.aud) {
+        IF type::is_array($token.aud) {
             IF "my-service" NOT IN $token.aud {
                 THROW "Invalid token audience"
             }
