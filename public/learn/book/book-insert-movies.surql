@@ -5,7 +5,7 @@
 // DEFINE PARAM
 
 DEFINE ANALYZER plot_analyzer TOKENIZERS class FILTERS lowercase, snowball(english), ngram(3,7), edgengram(3,7);
-DEFINE INDEX plot_index ON TABLE movie FIELDS plot SEARCH ANALYZER plot_analyzer BM25 HIGHLIGHTS;
+DEFINE INDEX plot_index ON TABLE movie FIELDS plot FULLTEXT ANALYZER plot_analyzer BM25 HIGHLIGHTS;
 
 // Country
 DEFINE TABLE country SCHEMAFULL TYPE NORMAL;
@@ -27,7 +27,7 @@ DEFINE FIELD languages ON TABLE movie TYPE option<array<string>>;
 DEFINE FIELD metacritic_rating ON TABLE movie TYPE option<int>  ASSERT $value >= 0 AND $value <= 100;
 DEFINE FIELD oscars_won ON TABLE movie TYPE option<int>;
 DEFINE FIELD plot ON TABLE movie TYPE option<string>;
-DEFINE FIELD poster ON TABLE movie TYPE option<string> ASSERT string::is::url($value);
+DEFINE FIELD poster ON TABLE movie TYPE option<string> ASSERT string::is_url($value);
 DEFINE FIELD rating ON TABLE movie TYPE option<string>;
 // Original data, useful as human-readable string
 DEFINE FIELD released ON TABLE movie TYPE option<string>;
@@ -4563,18 +4563,19 @@ INSERT INTO naive_movie [
 FOR $data IN (SELECT * FROM naive_movie) {
     LET $movie = CREATE movie SET
         awards = $data.Awards,
-		oscars_won = fn::get_oscars(awards),
-        box_office = IF $data.BoxOffice = 'N/A' { NONE } ELSE { <int>string::replace(string::replace($data.BoxOffice, '$', ''), ',', '') },
+		oscars_won = fn::get_oscars($data.Awards),
+        boxoffice = IF $data.BoxOffice = 'N/A' { NONE } ELSE { <int>string::replace(string::replace($data.BoxOffice, '$', ''), ',', '') },
         dvd = IF $data.DVD = 'N/A' { NONE } ELSE { fn::date_to_datetime($data.DVD) },
         genres = $data.Genre.split(', '),
         languages = string::split($data.Language, ', '),
         plot = $data.Plot,
         poster = $data.Poster,
-        rated = $data.Rated,
+        rating = $data.Rated,
         imdb_rating = fn::get_imdb($data.Ratings),
         rt_rating =   fn::get_rt($data.Ratings),
         metacritic_rating = fn::get_metacritic($data.Ratings),
-        released = fn::date_to_datetime($data.Released),
+        released = $data.Released,
+        datetime_released = fn::date_to_datetime($data.Released),
         runtime = <duration>string::replace($data.Runtime, ' min', 'm'),
         title = $data.Title;
 
