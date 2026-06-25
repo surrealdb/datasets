@@ -43,47 +43,6 @@ DEFINE FUNCTION fn::number_of_unfulfilled_orders() { RETURN (SELECT count() FROM
 DEFINE FUNCTION fn::pound_to_usd($price: number) { RETURN $price * 1.26f; } PERMISSIONS FULL;
 
 -- ------------------------------
--- TABLE: avg_product_review
--- ------------------------------
-
-DEFINE TABLE avg_product_review TYPE NORMAL SCHEMAFULL AS SELECT count() AS number_of_reviews, math::mean(<float> rating) AS avg_review, ->product.id AS product_id, ->product.name AS product_name FROM review GROUP BY product_id, product_name;
-DEFINE FIELD avg_review 
-    ON TABLE avg_product_review 
-    TYPE number;
-DEFINE FIELD id 
-    ON TABLE avg_product_review 
-    TYPE string;
-DEFINE FIELD number_of_reviews 
-    ON TABLE avg_product_review 
-    TYPE number;
-DEFINE FIELD product_id 
-    ON TABLE avg_product_review 
-    TYPE array<record<product>>;
-DEFINE FIELD product_name 
-    ON TABLE avg_product_review 
-    TYPE array<string>;
-
--- ------------------------------
--- TABLE: monthly_sales
--- ------------------------------
-
-DEFINE TABLE monthly_sales TYPE NORMAL SCHEMAFULL AS SELECT count() AS number_of_orders, time::format(time.created_at, '%Y-%m') AS month, math::sum(price * quantity) AS sum_sales, currency FROM order GROUP BY month, currency;
-DEFINE FIELD id 
-    ON TABLE monthly_sales 
-    TYPE string;
-DEFINE FIELD currency 
-    ON TABLE monthly_sales 
-    TYPE string;
-DEFINE FIELD month 
-    ON TABLE monthly_sales 
-    TYPE string;
-DEFINE FIELD number_of_orders 
-    ON TABLE monthly_sales 
-    TYPE number;
-DEFINE FIELD sum_sales 
-    ON TABLE monthly_sales 
-    TYPE number;
--- ------------------------------
 -- TABLE: address_history
 -- ------------------------------
 
@@ -94,27 +53,16 @@ DEFINE FIELD id
 DEFINE FIELD person 
     ON TABLE address_history 
     TYPE record<person>;
-DEFINE FIELD addresses 
-    ON TABLE address_history 
-    TYPE array<object>;
-DEFINE FIELD addresses.*.address_line_1 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.address_line_2 
-    ON TABLE address_history 
-    TYPE option<string>;
-DEFINE FIELD addresses.*.city 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.coordinates 
-    ON TABLE address_history 
-    TYPE geometry<point>;
-DEFINE FIELD addresses.*.country 
-    ON TABLE address_history 
-    TYPE string;
-DEFINE FIELD addresses.*.post_code 
-    ON TABLE address_history 
-    TYPE string;
+DEFINE FIELD addresses
+    ON TABLE address_history
+    TYPE array<{
+        address_line_1: string,
+        address_line_2: option<string>,
+        city: string,
+        coordinates: geometry<point>,
+        country: string,
+        post_code: string
+    }>;
 DEFINE FIELD time 
     ON TABLE address_history 
     TYPE object;
@@ -177,7 +125,7 @@ DEFINE FIELD company_name
 DEFINE FIELD email 
     ON TABLE person 
     TYPE string 
-    ASSERT string::is::email($value);
+    ASSERT string::is_email($value);
 DEFINE FIELD phone 
     ON TABLE person 
     TYPE string;
@@ -241,7 +189,7 @@ DEFINE FIELD images
 DEFINE FIELD images.*.url 
     ON TABLE product 
     TYPE string
-    ASSERT string::is::url($value);
+    ASSERT string::is_url($value);
 DEFINE FIELD images.*.position 
     ON TABLE product 
     TYPE number;
@@ -433,6 +381,48 @@ DEFINE FIELD time.updated_at
     ON TABLE review 
     TYPE datetime
     VALUE time::now();
+-- ------------------------------
+-- TABLE: avg_product_review
+-- ------------------------------
+
+DEFINE TABLE avg_product_review TYPE NORMAL SCHEMAFULL AS SELECT count() AS number_of_reviews, math::mean(<float> rating) AS avg_review, ->product.id AS product_id, ->product.name AS product_name FROM review GROUP BY product_id, product_name;
+DEFINE FIELD avg_review 
+    ON TABLE avg_product_review 
+    TYPE number;
+DEFINE FIELD id 
+    ON TABLE avg_product_review 
+    TYPE string;
+DEFINE FIELD number_of_reviews 
+    ON TABLE avg_product_review 
+    TYPE number;
+DEFINE FIELD product_id 
+    ON TABLE avg_product_review 
+    TYPE array<record<product>>;
+DEFINE FIELD product_name 
+    ON TABLE avg_product_review 
+    TYPE array<string>;
+
+
+-- ------------------------------
+-- TABLE: monthly_sales
+-- ------------------------------
+
+DEFINE TABLE monthly_sales TYPE NORMAL SCHEMAFULL AS SELECT count() AS number_of_orders, time::format(time.created_at, '%Y-%m') AS month, math::sum(price * quantity) AS sum_sales, currency FROM order GROUP BY month, currency;
+DEFINE FIELD id 
+    ON TABLE monthly_sales 
+    TYPE string;
+DEFINE FIELD currency 
+    ON TABLE monthly_sales 
+    TYPE string;
+DEFINE FIELD month 
+    ON TABLE monthly_sales 
+    TYPE string;
+DEFINE FIELD number_of_orders 
+    ON TABLE monthly_sales 
+    TYPE number;
+DEFINE FIELD sum_sales 
+    ON TABLE monthly_sales 
+    TYPE number;
 
 -- ------------------------------
 -- TABLE: seller
@@ -503,7 +493,7 @@ DEFINE ANALYZER blank_snowball
 DEFINE INDEX review_content 
     ON TABLE review 
     FIELDS review_text 
-    SEARCH ANALYZER blank_snowball BM25 HIGHLIGHTS;
+    FULLTEXT ANALYZER blank_snowball BM25 HIGHLIGHTS;
 
 -- ------------------------------
 -- TABLE DATA: address_history
