@@ -205,6 +205,21 @@ const datasets: Dataset[] = [
 						path: "datasets/surreal-start/queries/vector-queries.surql",
 					},
 					{
+						id: "document-queries",
+						label: "Document",
+						path: "datasets/surreal-start/queries/document-queries-v2.surql",
+					},
+					{
+						id: "relational-queries",
+						label: "Relational",
+						path: "datasets/surreal-start/queries/relational-queries-v2.surql",
+					},
+					{
+						id: "temporal-queries",
+						label: "Temporal and time-series",
+						path: "datasets/surreal-start/queries/temporal-queries-v2.surql",
+					},
+					{
 						id: "authentication",
 						label: "Authentication",
 						path: "datasets/surreal-start/queries/auth-queries-v2.surql",
@@ -230,6 +245,21 @@ const datasets: Dataset[] = [
 						id: "vector-queries",
 						label: "Vector Queries",
 						path: "datasets/surreal-start/queries/vector-queries.surql",
+					},
+					{
+						id: "document-queries",
+						label: "Document",
+						path: "datasets/surreal-start/queries/document-queries-v3.surql",
+					},
+					{
+						id: "relational-queries",
+						label: "Relational",
+						path: "datasets/surreal-start/queries/relational-queries-v3.surql",
+					},
+					{
+						id: "temporal-queries",
+						label: "Temporal and time-series",
+						path: "datasets/surreal-start/queries/temporal-queries-v3.surql",
 					},
 					{
 						id: "authentication",
