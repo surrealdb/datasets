@@ -31,6 +31,21 @@ interface Size {
 	path: string;
 }
 
+/**
+ * A notebook is a markdown document with live panels in it, opened in SurrealDB
+ * Studio through "Import notebook". Each one here is an onboarding flow: prose
+ * around a sequence of query blocks that are run one at a time, in order.
+ */
+interface Notebook {
+	id: string;
+	label: string;
+	description: string;
+	author: string;
+	hidden: boolean;
+	minimumVersion: string;
+	path: string;
+}
+
 const datasets: Dataset[] = [
 	{
 		id: "surreal-deal-store",
@@ -298,6 +313,19 @@ const datasets: Dataset[] = [
 	},
 ];
 
+const notebooks: Notebook[] = [
+	{
+		id: "surreal-start-ai",
+		label: "Surreal Start: AI",
+		description:
+			"An onboarding notebook that goes from an empty database to semantic search, hybrid ranking and a retrieval endpoint for an AI assistant, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-ai/surreal-start-ai.md",
+	},
+];
+
 console.log("Building datasets...");
 
 if (!existsSync("out")) {
@@ -307,5 +335,8 @@ if (!existsSync("out")) {
 
 console.log("Writing datasets.json to output directory...");
 writeFileSync("out/datasets.json", JSON.stringify(datasets, null, 4));
+
+console.log("Writing notebooks.json to output directory...");
+writeFileSync("out/notebooks.json", JSON.stringify(notebooks, null, 4));
 
 console.log("Done!");
