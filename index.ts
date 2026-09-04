@@ -313,7 +313,38 @@ const datasets: Dataset[] = [
 	},
 ];
 
+// Offered to a new account at sign-up, in this order, as the topics to start with.
 const notebooks: Notebook[] = [
+	{
+		id: "surreal-start-fundamentals",
+		label: "Surreal Start: Fundamentals",
+		description:
+			"An onboarding notebook that covers the everyday SurrealQL: creating, reading, changing and linking records, adding a schema and aggregating, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-fundamentals/surreal-start-fundamentals.md",
+	},
+	{
+		id: "surreal-start-graph",
+		label: "Surreal Start: Graph",
+		description:
+			"An onboarding notebook that builds a small social graph and walks it: edges that carry data, traversal in both directions, recursive queries, recommendations, shortest paths and a graph view, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-graph/surreal-start-graph.md",
+	},
+	{
+		id: "surreal-start-auth",
+		label: "Surreal Start: Auth",
+		description:
+			"An onboarding notebook that turns a database into a backend: sign-up and sign-in, hashed passwords, row-level permissions, an authenticate hook, system users and third-party tokens, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-auth/surreal-start-auth.md",
+	},
 	{
 		id: "surreal-start-ai",
 		label: "Surreal Start: AI",
