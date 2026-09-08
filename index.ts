@@ -32,9 +32,12 @@ interface Size {
 }
 
 /**
- * A notebook is a markdown document with live panels in it, opened in SurrealDB
- * Studio through "Import notebook". Each one here is an onboarding flow: prose
- * around a sequence of query blocks that are run one at a time, in order.
+ * A notebook is a markdown document with live query panels in it, rendered by
+ * SurrealDB Studio as a guide: prose around a sequence of blocks that are run one
+ * at a time, in order. The prose is fixed - Studio renders a notebook rather than
+ * editing it - while every block is a live query panel a reader can change and
+ * run again. Studio opens the one matching a new account's onboarding use case,
+ * and offers all of them from an instance's dashboard under "Guides".
  */
 interface Notebook {
 	id: string;
@@ -313,13 +316,14 @@ const datasets: Dataset[] = [
 	},
 ];
 
-// Offered to a new account at sign-up, in this order, as the topics to start with.
+// One per starting interest. Studio refers to a notebook by its id, so ids must
+// stay stable; labels and descriptions are free to change.
 const notebooks: Notebook[] = [
 	{
 		id: "surreal-start-fundamentals",
 		label: "Surreal Start: Fundamentals",
 		description:
-			"An onboarding notebook that covers the everyday SurrealQL: creating, reading, changing and linking records, adding a schema and aggregating, one query at a time.",
+			"An onboarding guide to SurrealDB as a database: creating, reading, changing, linking and indexing records, adding a schema, grouping, and transactions, one query at a time.",
 		author: "SurrealDB Team",
 		hidden: false,
 		minimumVersion: "3.0",
@@ -329,7 +333,7 @@ const notebooks: Notebook[] = [
 		id: "surreal-start-graph",
 		label: "Surreal Start: Graph",
 		description:
-			"An onboarding notebook that builds a small social graph and walks it: edges that carry data, traversal in both directions, recursive queries, recommendations, shortest paths and a graph view, one query at a time.",
+			"An onboarding guide that builds a small social graph and walks it: edges that carry data, traversal in both directions, recursive queries, recommendations, shortest paths and a drawn graph, one query at a time.",
 		author: "SurrealDB Team",
 		hidden: false,
 		minimumVersion: "3.0",
@@ -339,7 +343,7 @@ const notebooks: Notebook[] = [
 		id: "surreal-start-auth",
 		label: "Surreal Start: Auth",
 		description:
-			"An onboarding notebook that turns a database into a backend: sign-up and sign-in, hashed passwords, row-level permissions, an authenticate hook, system users and third-party tokens, one query at a time.",
+			"An onboarding guide that turns a database into a backend: sign-up and sign-in, hashed passwords, row-level permissions, a check on every request, system users and third-party tokens, one query at a time.",
 		author: "SurrealDB Team",
 		hidden: false,
 		minimumVersion: "3.0",
@@ -349,7 +353,7 @@ const notebooks: Notebook[] = [
 		id: "surreal-start-ai",
 		label: "Surreal Start: AI",
 		description:
-			"An onboarding notebook that goes from an empty database to semantic search, hybrid ranking and a retrieval endpoint for an AI assistant, one query at a time.",
+			"An onboarding guide that gives an AI agent a memory: storing what it learns with embeddings, recalling by meaning, freshness, importance, exact words and relationships, forgetting on purpose, and serving recall through a function and an API, one query at a time.",
 		author: "SurrealDB Team",
 		hidden: false,
 		minimumVersion: "3.0",
