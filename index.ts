@@ -31,6 +31,24 @@ interface Size {
 	path: string;
 }
 
+/**
+ * A notebook is a markdown document with live query panels in it, rendered by
+ * SurrealDB Studio as a guide: prose around a sequence of blocks that are run one
+ * at a time, in order. The prose is fixed - Studio renders a notebook rather than
+ * editing it - while every block is a live query panel a reader can change and
+ * run again. Studio opens the one matching a new account's onboarding use case,
+ * and offers all of them from an instance's dashboard under "Guides".
+ */
+interface Notebook {
+	id: string;
+	label: string;
+	description: string;
+	author: string;
+	hidden: boolean;
+	minimumVersion: string;
+	path: string;
+}
+
 const datasets: Dataset[] = [
 	{
 		id: "surreal-deal-store",
@@ -328,6 +346,51 @@ const datasets: Dataset[] = [
 	},
 ];
 
+// One per starting interest. Studio refers to a notebook by its id, so ids must
+// stay stable; labels and descriptions are free to change.
+const notebooks: Notebook[] = [
+	{
+		id: "surreal-start-fundamentals",
+		label: "Surreal Start: Fundamentals",
+		description:
+			"An onboarding guide to SurrealDB as a database: creating, reading, changing, linking and indexing records, adding a schema, grouping, and transactions, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-fundamentals/surreal-start-fundamentals.md",
+	},
+	{
+		id: "surreal-start-graph",
+		label: "Surreal Start: Graph",
+		description:
+			"An onboarding guide that builds a small social graph and walks it: edges that carry data, traversal in both directions, recursive queries, recommendations, shortest paths and a drawn graph, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-graph/surreal-start-graph.md",
+	},
+	{
+		id: "surreal-start-auth",
+		label: "Surreal Start: Auth",
+		description:
+			"An onboarding guide that turns a database into a backend: sign-up and sign-in, hashed passwords, row-level permissions, a check on every request, system users and third-party tokens, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-auth/surreal-start-auth.md",
+	},
+	{
+		id: "surreal-start-ai",
+		label: "Surreal Start: AI",
+		description:
+			"An onboarding guide that gives an AI agent a memory: storing what it learns with embeddings, recalling by meaning, freshness, importance, exact words and relationships, forgetting on purpose, and serving recall through a function and an API, one query at a time.",
+		author: "SurrealDB Team",
+		hidden: false,
+		minimumVersion: "3.0",
+		path: "notebooks/surreal-start-ai/surreal-start-ai.md",
+	},
+];
+
 console.log("Building datasets...");
 
 if (!existsSync("out")) {
@@ -337,5 +400,8 @@ if (!existsSync("out")) {
 
 console.log("Writing datasets.json to output directory...");
 writeFileSync("out/datasets.json", JSON.stringify(datasets, null, 4));
+
+console.log("Writing notebooks.json to output directory...");
+writeFileSync("out/notebooks.json", JSON.stringify(notebooks, null, 4));
 
 console.log("Done!");
