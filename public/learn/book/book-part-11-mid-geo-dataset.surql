@@ -39,79 +39,80 @@ INSERT INTO town [
 ];
 
 FOR $trip IN [
- { from: "The Naimo",      to: "The Hill",       crookedness: "straight",     terrain: "road",  slope: "up"    },
- { from: "The Hill",       to: "The Naimo",      crookedness: "straight",     terrain: "road",  slope: "down"  },
- { from: "Honeymoon",      to: "The Hill",       crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "The Hill",       to: "Honeymoon",      crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "The Hill",       to: "Toria",          crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Toria",          to: "The Hill",       crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Black Bay",      to: "Toria",          crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Toria",          to: "Black Bay",      crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Sukh",           to: "Toria",          crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Toria",          to: "Sukh",           crookedness: "straight",     terrain: "road",  slope: "flat"  },
+ { from: "The Naimo",      to: "The Hill",       crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "The Hill",       to: "The Naimo",      crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Honeymoon",      to: "The Hill",       crookedness: "crooked",      terrain: "road",  slope: "down" },
+ { from: "The Hill",       to: "Honeymoon",      crookedness: "crooked",      terrain: "road",  slope: "up" },
+ { from: "The Hill",       to: "Toria",          crookedness: "crooked",      terrain: "road",  slope: "steep" },
+ { from: "Toria",          to: "The Hill",       crookedness: "crooked",      terrain: "road",  slope: "steep" },
+ { from: "Black Bay",      to: "Toria",          crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Toria",          to: "Black Bay",      crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Sukh",           to: "Toria",          crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Toria",          to: "Sukh",           crookedness: "crooked",      terrain: "road",  slope: "flat" },
  { from: "Toria",          to: "Marysville",     crookedness: "straight",     terrain: "water", slope: "flat" },
  { from: "Marysville",     to: "Toria",          crookedness: "straight",     terrain: "water", slope: "flat" },
- { from: "Redmont",        to: "Marysville",     crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Marysville",     to: "Redmont",        crookedness: "straight",     terrain: "road",  slope: "flat"  },
+ { from: "Redmont",        to: "Marysville",     crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Marysville",     to: "Redmont",        crookedness: "straight",     terrain: "road",  slope: "flat" },
  { from: "Black Bay",      to: "Gaston",         crookedness: "crooked",      terrain: "water", slope: "flat" },
  { from: "Gaston",         to: "Black Bay",      crookedness: "crooked",      terrain: "water", slope: "flat" },
- { from: "Gaston",         to: "Abeston",        crookedness: "straight",     terrain: "road",  slope: "flat"  },
- { from: "Abeston",        to: "Gaston",         crookedness: "straight",     terrain: "road",  slope: "flat"  },
-// { from: "Gaston",         to: "Redmont",       crookedness: "straight",     terrain: "road", slope: "flat" }, Uncomment after learning how to make functions
-// { from: "Redmont",        to: "Gaston",        crookedness: "straight",     terrain: "road", slope: "flat" }, Uncomment after learning how to make functions
- { from: "Abeston",        to: "Hope",           crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Hope",           to: "Abeston",        crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Hope",           to: "Merit",          crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Merit",          to: "Hope",           crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Hope",           to: "Princeton",      crookedness: "very crooked", terrain: "road",  slope: "flat" },
- { from: "Princeton",      to: "Hope",           crookedness: "very crooked", terrain: "road",  slope: "flat" },
- { from: "Princeton",      to: "Grasslands",     crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Grasslands",     to: "Princeton",      crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Gaston",         to: "Abeston",        crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Abeston",        to: "Gaston",         crookedness: "straight",     terrain: "road",  slope: "flat" },
+// { from: "Gaston",         to: "Redmont",       crookedness: "straight",     terrain: "road",  slope: "flat" }, Uncomment after learning how to make functions
+// { from: "Redmont",        to: "Gaston",        crookedness: "straight",     terrain: "road",  slope: "flat" }, Uncomment after learning how to make functions
+ { from: "Abeston",        to: "Hope",           crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Hope",           to: "Abeston",        crookedness: "straight",     terrain: "road",  slope: "flat" },
+ { from: "Hope",           to: "Merit",          crookedness: "crooked",      terrain: "hard",  slope: "steep" },
+ { from: "Merit",          to: "Hope",           crookedness: "crooked",      terrain: "hard",  slope: "steep" },
+ { from: "Hope",           to: "Princeton",      crookedness: "very crooked", terrain: "hard",  slope: "steep" },
+ { from: "Princeton",      to: "Hope",           crookedness: "very crooked", terrain: "hard",  slope: "steep" },
+ { from: "Princeton",      to: "Grasslands",     crookedness: "crooked",      terrain: "road",  slope: "down" },
+ { from: "Grasslands",     to: "Princeton",      crookedness: "crooked",      terrain: "road",  slope: "up" },
  { from: "Southlake",      to: "Grasslands",     crookedness: "straight",     terrain: "road",  slope: "flat" },
  { from: "Grasslands",     to: "Southlake",      crookedness: "straight",     terrain: "road",  slope: "flat" },
- { from: "Southlake",      to: "Lake Country",   crookedness: "straight",     terrain: "road",  slope: "flat" },
- { from: "Lake Country",   to: "Southlake",      crookedness: "straight",     terrain: "road",  slope: "flat" },
- { from: "Merit",          to: "Lake Country",   crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Lake Country",   to: "Merit",          crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Merit",          to: "Copper Creek",   crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Copper Creek",   to: "Merit",          crookedness: "crooked",      terrain: "road",  slope: "flat" },
- { from: "Copper Creek",   to: "Revelry",        crookedness: "very crooked", terrain: "road",  slope: "flat" },
- { from: "Revelry",        to: "Copper Creek",   crookedness: "very crooked", terrain: "road",  slope: "flat" },
- { from: "Revelry",        to: "Bulton",         crookedness: "very crooked", terrain: "road",  slope: "flat" },
- { from: "Bulton",         to: "Revelry",        crookedness: "very crooked", terrain: "road",  slope: "flat" },
+ { from: "Southlake",      to: "Lake Country",   crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Lake Country",   to: "Southlake",      crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Merit",          to: "Lake Country",   crookedness: "straight",     terrain: "road",  slope: "steep" },
+ { from: "Lake Country",   to: "Merit",          crookedness: "straight",     terrain: "road",  slope: "steep" },
+ { from: "Merit",          to: "Copper Creek",   crookedness: "straight",     terrain: "road",  slope: "down" },
+ { from: "Copper Creek",   to: "Merit",          crookedness: "straight",     terrain: "road",  slope: "up" },
+ { from: "Copper Creek",   to: "Revelry",        crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Revelry",        to: "Copper Creek",   crookedness: "crooked",      terrain: "road",  slope: "flat" },
+ { from: "Revelry",        to: "Bulton",         crookedness: "very crooked", terrain: "hard",  slope: "steep" },
+ { from: "Bulton",         to: "Revelry",        crookedness: "very crooked", terrain: "hard",  slope: "steep" },
  { from: "Bulton",         to: "Edmond's Field", crookedness: "straight",     terrain: "road",  slope: "flat" },
  { from: "Edmond's Field", to: "Bulton",         crookedness: "straight",     terrain: "road",  slope: "flat" },
 ] {
 LET $begin = (SELECT * FROM ONLY town WHERE name = $trip.from LIMIT 1);
 LET $end =   (SELECT * FROM ONLY town WHERE name = $trip.to LIMIT 1);
+LET $distance = geo::distance($begin.location, $end.location);
+LET $speed_modifier =
+    (IF     $trip.crookedness = "straight"     { 1.0 }
+    ELSE IF $trip.crookedness = "crooked"      { 0.8 }
+    ELSE IF $trip.crookedness = "very crooked" { 0.5 })
+    *
+    (IF     $trip.slope = "flat"               { 1.0 }
+    ELSE IF $trip.slope = "up"                 { 0.8 }
+    ELSE IF $trip.slope = "down"               { 1.2 }
+    ELSE IF $trip.slope = "steep"              { 0.5 }
+    )
+    *
+    (IF $trip.terrain = "road"                 { 1.2 }
+    ELSE IF $trip.terrain = "normal"           { 1.0 }
+    ELSE IF $trip.terrain = "hard"             { 0.7 }
+    ELSE IF $trip.terrain = "water"            { 1.0 }
+    );
 RELATE $begin->to->$end
     SET
     crookedness = $trip.crookedness,
     terrain = $trip.terrain,
     slope = $trip.slope,
-    distance = geo::distance($begin.location, $end.location),
-    speed_modifier = 
-        (IF     $trip.crookedness = "straight"     { 1.0 }
-        ELSE IF $trip.crookedness = "crooked"      { 0.8 }
-        ELSE IF $trip.crookedness = "very crooked" { 0.5 })
-        *
-        (IF     $trip.slope = "flat"               { 1.0 }
-        ELSE IF $trip.slope = "up"                 { 0.8 }
-        ELSE IF $trip.slope = "down"               { 1.2 }
-        ELSE IF $trip.slope = "steep"              { 0.5 }        
-        )
-        *
-        (IF $trip.terrain = "road"                 { 1.2 }
-        ELSE IF $trip.terrain = "normal"           { 1.0 }
-        ELSE IF $trip.terrain = "hard"             { 0.7 }
-        ELSE IF $trip.terrain = "water"            { 1.0 }
-        )
-        ,
+    distance = $distance,
+    speed_modifier = $speed_modifier,
     // if land, then 20 km per day * modifier
     // if water, assume one day of wait then 100 km per day * modifier
-    days_travel = 
-        IF $trip.terrain = "water" { 1 + (distance / 100000) / speed_modifier }
-        ELSE                       {      (distance / 20000)  / speed_modifier  }
+    days_travel =
+        IF $trip.terrain = "water" { 1 + ($distance / 100000) / $speed_modifier }
+        ELSE                       {      ($distance / 20000)  / $speed_modifier  }
 };
 
 -- Uncomment + paste into https://csacademy.com/app/graph_editor/ to see a nice graph/node representation
