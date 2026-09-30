@@ -84,34 +84,35 @@ FOR $trip IN [
 ] {
 LET $begin = (SELECT * FROM ONLY town WHERE name = $trip.from LIMIT 1);
 LET $end =   (SELECT * FROM ONLY town WHERE name = $trip.to LIMIT 1);
+LET $distance = geo::distance($begin.location, $end.location);
+LET $speed_modifier =
+    (IF     $trip.crookedness = "straight"     { 1.0 }
+    ELSE IF $trip.crookedness = "crooked"      { 0.8 }
+    ELSE IF $trip.crookedness = "very crooked" { 0.5 })
+    *
+    (IF     $trip.slope = "flat"               { 1.0 }
+    ELSE IF $trip.slope = "up"                 { 0.8 }
+    ELSE IF $trip.slope = "down"               { 1.2 }
+    ELSE IF $trip.slope = "steep"              { 0.5 }
+    )
+    *
+    (IF $trip.terrain = "road"                 { 1.2 }
+    ELSE IF $trip.terrain = "normal"           { 1.0 }
+    ELSE IF $trip.terrain = "hard"             { 0.7 }
+    ELSE IF $trip.terrain = "water"            { 1.0 }
+    );
 RELATE $begin->to->$end
     SET
     crookedness = $trip.crookedness,
     terrain = $trip.terrain,
     slope = $trip.slope,
-    distance = geo::distance($begin.location, $end.location),
-    speed_modifier = 
-        (IF     $trip.crookedness = "straight"     { 1.0 }
-        ELSE IF $trip.crookedness = "crooked"      { 0.8 }
-        ELSE IF $trip.crookedness = "very crooked" { 0.5 })
-        *
-        (IF     $trip.slope = "flat"               { 1.0 }
-        ELSE IF $trip.slope = "up"                 { 0.8 }
-        ELSE IF $trip.slope = "down"               { 1.2 }
-        ELSE IF $trip.slope = "steep"              { 0.5 }        
-        )
-        *
-        (IF $trip.terrain = "road"                 { 1.2 }
-        ELSE IF $trip.terrain = "normal"           { 1.0 }
-        ELSE IF $trip.terrain = "hard"             { 0.7 }
-        ELSE IF $trip.terrain = "water"            { 1.0 }
-        )
-        ,
+    distance = $distance,
+    speed_modifier = $speed_modifier,
     // if land, then 20 km per day * modifier
     // if water, assume one day of wait then 100 km per day * modifier
-    days_travel = 
-        IF $trip.terrain = "water" { 1 + (distance / 100000) / speed_modifier }
-        ELSE                       {      (distance / 20000)  / speed_modifier  }
+    days_travel =
+        IF $trip.terrain = "water" { 1 + ($distance / 100000) / $speed_modifier }
+        ELSE                       {      ($distance / 20000)  / $speed_modifier  }
 };
 
 -- Uncomment + paste into https://csacademy.com/app/graph_editor/ to see a nice graph/node representation
