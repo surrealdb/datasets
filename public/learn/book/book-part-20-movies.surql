@@ -94,11 +94,11 @@ DEFINE FUNCTION fn::get_oscars($input: string) -> option<int> {
 	}
 };
 
-DEFINE FUNCTION fn::random_movie() {
+DEFINE FUNCTION fn::random_movie() -> array {
     LET $random_genre = rand::enum($GENRES);
     LET $random_rating = rand::enum($RATINGS);
-    LET $title = RETURN "Movies for " + $random_genre + " and " + $random_rating;
-    RETURN [$title, (SELECT * FROM movie WHERE $random_genre IN genres and $random_rating IN rated)];    
+    LET $title = "Movies for " + $random_genre + " and " + $random_rating;
+    RETURN [$title, (SELECT * FROM movie WHERE $random_genre IN genres AND rated = $random_rating)];
 };
 
 INSERT INTO naive_movie [
@@ -4617,7 +4617,7 @@ FOR $data in (SELECT * FROM naive_movie) {
     FOR $name IN $data.Writer.split(", ") {
 	LET $writer = (SELECT * FROM ONLY person WHERE name = $name LIMIT 1);
 	LET $writer = IF $writer IS NONE {
-		(CREATE ONLY person SET name = $name, roles += "actor")
+		(CREATE ONLY person SET name = $name, roles += "writer")
 	} ELSE {
 		IF "writer" NOT IN $writer.roles {
 			UPDATE $writer SET roles += "writer"
