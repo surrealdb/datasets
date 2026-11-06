@@ -8,6 +8,13 @@ jobs:
   publish:
     name: Publish to S3
     runs-on: ubuntu-latest
+    # The AWS role trusts only this workflow on main, bound to this
+    # environment, so the environment's branch policy and the role's trust
+    # both gate publishing.
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Information
         run: echo "Deploying datasets update"
@@ -27,8 +34,9 @@ jobs:
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AMAZON_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AMAZON_SECRET_KEY }}
+          role-to-assume: arn:aws:iam::857808225976:role/gh-publish-surrealdb-datasets
+          role-session-name: datasets-deploy-${{ github.run_id }}
+          role-duration-seconds: 900
 
       - name: Deploy to S3
         run: |
