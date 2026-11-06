@@ -5,7 +5,6 @@
 // DEFINE PARAM
 
 DEFINE ANALYZER plot_analyzer TOKENIZERS class FILTERS lowercase, snowball(english), ngram(3,7), edgengram(3,7);
-DEFINE INDEX plot_index ON TABLE movie FIELDS plot FULLTEXT ANALYZER plot_analyzer BM25 HIGHLIGHTS;
 
 // Country
 DEFINE TABLE country SCHEMAFULL TYPE NORMAL;
@@ -18,6 +17,7 @@ DEFINE FIELD roles ON TABLE person TYPE option<array<string>>;
 
 // Movie
 DEFINE TABLE movie SCHEMAFULL TYPE NORMAL;
+DEFINE INDEX plot_index ON TABLE movie FIELDS plot FULLTEXT ANALYZER plot_analyzer BM25 HIGHLIGHTS;
 DEFINE FIELD awards ON TABLE movie TYPE option<string>;
 DEFINE FIELD boxoffice ON TABLE movie TYPE option<int> ASSERT $value >= 0;
 DEFINE FIELD dvd ON TABLE movie TYPE option<datetime>;
@@ -84,8 +84,8 @@ DEFINE FUNCTION fn::get_metacritic($obj: array<object>) {
 
 DEFINE FUNCTION fn::get_oscars($input: string) -> option<int> {
 	RETURN IF string::starts_with($input, 'Won ') AND 'Oscar' in $input {
-    	let $input = string::replace($input, 'Won ', '');
-    	<int>$input.split(' Oscar')[0]
+    	LET $text = $input.replace('Won ', '');
+    	<int>$text.split(' Oscar')[0]
 	} ELSE {
     	NONE
 	}

@@ -87,8 +87,8 @@ DEFINE FUNCTION fn::get_metacritic($obj: array<object>) -> option<number> {
 
 DEFINE FUNCTION fn::get_oscars($input: string) -> option<int> {
 	RETURN IF $input.starts_with('Won ') AND 'Oscar' in $input {
-    	let $input = $input.replace('Won ', '');
-    	<int>$input.split(' Oscar')[0]
+    	LET $text = $input.replace('Won ', '');
+    	<int>$text.split(' Oscar')[0]
 	} ELSE {
     	NONE
 	}
