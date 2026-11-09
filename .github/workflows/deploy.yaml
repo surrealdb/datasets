@@ -6,8 +6,10 @@ on:
 
 permissions: {}
 
-# Deploys run one at a time, in push order: two syncs with --delete running
-# together would let the older commit's sync remove what the newer one added.
+# Deploys run one at a time: two syncs with --delete running together would let
+# one commit's sync remove what the other added. The group does not order runs
+# by push, so each run also checks that its commit is still main's tip before
+# publishing (see "Check the commit is current").
 concurrency:
   group: deploy-production
   cancel-in-progress: false
@@ -41,7 +43,27 @@ jobs:
       - name: Compile datasets file
         run: bun install --frozen-lockfile && bun run compile
 
+      # A run whose commit main has moved past publishes nothing: the run for
+      # the newer commit publishes it, whether it ran before this one or waits
+      # behind it, so an older tree never replaces a newer one.
+      - name: Check the commit is current
+        id: current
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          tip="$(gh api "repos/${REPO}/commits/main" --jq .sha)"
+          if [ "${tip}" = "${SHA}" ]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Deploy skipped::main is at ${tip}, past ${SHA}; the run for the newer commit publishes it."
+          fi
+
       - name: Configure AWS Credentials
+        if: steps.current.outputs.current == 'true'
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           aws-region: us-east-1
@@ -52,6 +74,7 @@ jobs:
       # datasets.json and notebooks.json are built into out/, not public/, so
       # the sync leaves them alone and the copies below replace them in place.
       - name: Deploy to S3
+        if: steps.current.outputs.current == 'true'
         run: |
           aws s3 sync public s3://datasets.surrealdb.com --delete --exclude datasets.json --exclude notebooks.json --cache-control "public, max-age=1800"
           aws s3 cp out/datasets.json s3://datasets.surrealdb.com/datasets.json --cache-control "public, max-age=300"
