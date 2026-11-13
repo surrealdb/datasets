@@ -12,7 +12,7 @@ FOR $person IN [ { age: 30, name: 'Sara Bellum' }, { age: 25, name: 'Lydia Wyndh
 
 DEFINE FIELD account_created ON TABLE customer_of VALUE time::now() READONLY;
 DEFINE FIELD last_updated ON TABLE customer_of VALUE time::now();
-DEFINE FIELD customer_for ON TABLE customer_of VALUE <future> { time::now() - account_created };
+DEFINE FIELD customer_for ON TABLE customer_of COMPUTED time::now() - account_created;
 
 FOR $data IN [ { age: 15, name: 'Archie Andrews' }, { age: 15, name: 'Veronica Lodge' }, { age: 15, name: 'Betty Cooper' }, { age: 15, name: 'Jughead Jones'}, { age: 15, name: 'Reggie Mantle'}, { age: 50, name: 'Hiram P. Lodge' }, { age: 55, name: 'Geraldine Grundy' }, { age: 65, name: 'Waldo Weatherbee' } ] { LET $person = CREATE ONLY person SET name = $data.name, age = $data.age; RELATE $person->customer_of->place:surreal_library; };
 

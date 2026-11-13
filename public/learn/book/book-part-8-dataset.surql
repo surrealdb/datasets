@@ -1,7 +1,6 @@
 -- Chapter 5
 DEFINE TABLE person SCHEMAFULL;
 DEFINE TABLE building SCHEMAFULL;
-DEFINE FIELD name ON table person TYPE string;
 DEFINE FIELD class ON table person TYPE option<string>;
 DEFINE FIELD money ON TABLE person 
     TYPE option<int>
@@ -9,6 +8,7 @@ DEFINE FIELD money ON TABLE person
 DEFINE FIELD name ON TABLE person 
     TYPE string 
     ASSERT $value.replace(" ", "").replace("-", "").is_alpha();
+DEFINE FIELD name ON TABLE building TYPE string;
 DEFINE FIELD kind ON TABLE building 
     TYPE string
     ASSERT 
@@ -54,12 +54,11 @@ RELATE person:bertha->married->person:fish_knight;
 RELATE person:the_nobleman->married->person:the_noblewoman;
 
 -- Chapter 8
-CREATE person:grandmother SET 
-    name = "Mother of the Nobleman",
-    feeling = "Disappointed in son";
+CREATE person:grandmother SET name = "Mother of the Nobleman";
 RELATE person:grandmother->parent_of->person:the_nobleman SET between = "mother-son";
 CREATE person:reginald SET name = "Reginald";
-RELATE [person:the_nobleman, person:the_noblewoman]->parent_of->person:reginald;
+RELATE person:the_nobleman->parent_of->person:reginald SET between = "father-son";
+RELATE person:the_noblewoman->parent_of->person:reginald SET between = "mother-son";
 CREATE person:sorcerer SET name = "Zornebock";
 RELATE [
     person:reginald,
