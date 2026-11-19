@@ -45,6 +45,24 @@ interface Notebook {
 	description: string;
 	author: string;
 	hidden: boolean;
+	/**
+	 * The revision read by Studio releases that predate `versions`, which take
+	 * this path for any engine they offer the notebook on. Those releases only
+	 * offer notebooks on 3.x, so this always names the 3.0 revision.
+	 */
+	minimumVersion: string;
+	path: string;
+	/**
+	 * One revision per SurrealDB release line, since a notebook's queries are
+	 * written for the release they were checked on. Studio opens the newest
+	 * revision the connected engine can run.
+	 */
+	versions: NotebookVersion[];
+}
+
+interface NotebookVersion {
+	id: string;
+	hidden: boolean;
 	minimumVersion: string;
 	path: string;
 }
@@ -347,7 +365,9 @@ const datasets: Dataset[] = [
 ];
 
 // One per starting interest. Studio refers to a notebook by its id, so ids must
-// stay stable; labels and descriptions are free to change.
+// stay stable; labels and descriptions are free to change. Each notebook keeps
+// one revision per release line under `versions`, and its top-level `path`
+// stays on the 3.0 revision for the Studio releases that read only that.
 const notebooks: Notebook[] = [
 	{
 		id: "surreal-start-fundamentals",
@@ -358,6 +378,20 @@ const notebooks: Notebook[] = [
 		hidden: false,
 		minimumVersion: "3.0",
 		path: "notebooks/surreal-start-fundamentals/surreal-start-fundamentals.md",
+		versions: [
+			{
+				id: "v3",
+				hidden: false,
+				minimumVersion: "3.0",
+				path: "notebooks/surreal-start-fundamentals/surreal-start-fundamentals.md",
+			},
+			{
+				id: "v4",
+				hidden: false,
+				minimumVersion: "4.0",
+				path: "notebooks/surreal-start-fundamentals/surreal-start-fundamentals-v4.md",
+			},
+		],
 	},
 	{
 		id: "surreal-start-graph",
@@ -368,6 +402,20 @@ const notebooks: Notebook[] = [
 		hidden: false,
 		minimumVersion: "3.0",
 		path: "notebooks/surreal-start-graph/surreal-start-graph.md",
+		versions: [
+			{
+				id: "v3",
+				hidden: false,
+				minimumVersion: "3.0",
+				path: "notebooks/surreal-start-graph/surreal-start-graph.md",
+			},
+			{
+				id: "v4",
+				hidden: false,
+				minimumVersion: "4.0",
+				path: "notebooks/surreal-start-graph/surreal-start-graph-v4.md",
+			},
+		],
 	},
 	{
 		id: "surreal-start-auth",
@@ -378,6 +426,20 @@ const notebooks: Notebook[] = [
 		hidden: false,
 		minimumVersion: "3.0",
 		path: "notebooks/surreal-start-auth/surreal-start-auth.md",
+		versions: [
+			{
+				id: "v3",
+				hidden: false,
+				minimumVersion: "3.0",
+				path: "notebooks/surreal-start-auth/surreal-start-auth.md",
+			},
+			{
+				id: "v4",
+				hidden: false,
+				minimumVersion: "4.0",
+				path: "notebooks/surreal-start-auth/surreal-start-auth-v4.md",
+			},
+		],
 	},
 	{
 		id: "surreal-start-ai",
@@ -388,6 +450,20 @@ const notebooks: Notebook[] = [
 		hidden: false,
 		minimumVersion: "3.0",
 		path: "notebooks/surreal-start-ai/surreal-start-ai.md",
+		versions: [
+			{
+				id: "v3",
+				hidden: false,
+				minimumVersion: "3.0",
+				path: "notebooks/surreal-start-ai/surreal-start-ai.md",
+			},
+			{
+				id: "v4",
+				hidden: false,
+				minimumVersion: "4.0",
+				path: "notebooks/surreal-start-ai/surreal-start-ai-v4.md",
+			},
+		],
 	},
 ];
 
