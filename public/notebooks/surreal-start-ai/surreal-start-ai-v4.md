@@ -480,7 +480,7 @@ A language model wants its memories as text it can read, so shape the prompt in 
 ```
 
 > [!note]
-> `PERMISSIONS FULL` makes the route public. Narrow it to an expression such as `$auth.id != NONE` to require a signed-in user, and add `SECURITY INVOKER` to run the body with the caller's own permissions - the **Surreal Start: Auth** guide shows both.
+> `PERMISSIONS FULL` makes the route public. Narrow it to an expression such as `$auth.id != NONE` to require a signed-in user, and add `SECURITY INVOKER` to run the body with the caller's own permissions - the **Surreal Start: Auth** guide shows both. With `SECURITY INVOKER` the caller must also be allowed to read `memory`, which has no `PERMISSIONS` yet, so give the table a `FOR select` rule too, or a signed-in caller gets back no memories.
 
 ---
 
@@ -527,13 +527,13 @@ The vector then arrives as a **parameter**. Open the **Parameters** tab of this 
 
 ## 13. From your agent's code
 
-Two calls cover most of what an agent does with its memory: write something it just learned, and recall what matters before it answers. `embed` stands for whichever embedding model you use. Use an SDK release that supports SurrealDB 4.x - for JavaScript, version 2.1 or later.
+Two calls cover most of what an agent does with its memory: write something it just learned, and recall what matters before it answers. `embed` stands for whichever embedding model you use. Use an SDK release that supports SurrealDB 4.x - version 2.1 or later of the JavaScript SDK, and 3.0 or later of the Python SDK.
 
 <Tabs>
 <TabItem label="JavaScript">
 
 ```javascript
-import { Surreal } from "surrealdb";
+import { Surreal, Table } from "surrealdb";
 
 const db = new Surreal();
 
@@ -545,7 +545,7 @@ await db.connect("wss://<your-instance>/rpc", {
 await db.signin({ username: "<user>", password: "<password>" });
 
 // Remember something the user just said
-await db.create("memory", {
+await db.create(new Table("memory")).content({
     content: "Ada is allergic to peanuts.",
     kind: "semantic",
     importance: 0.9,
@@ -579,7 +579,8 @@ with Surreal("wss://<your-instance>/rpc") as db:
 
     # Recall before answering
     question = "What should I cook tonight?"
-    memories = db.query("RETURN fn::recall($vector, 3);", {"vector": embed(question)})
+    # .first() runs the query and returns the first statement's result
+    memories = db.query("RETURN fn::recall($vector, 3);", {"vector": embed(question)}).first()
 ```
 
 </TabItem>

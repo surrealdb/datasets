@@ -243,7 +243,7 @@ Permissions apply to record users, and this guide runs as a system user, so the 
 ```
 
 > [!tip]
-> Switch this block to **Record user** as in step 6 and sign in as Bob, and the same `api::invoke` returns only the two published posts. A caller who has not signed in is refused with `403 Forbidden`.
+> Switch this block to **Record user** as in step 6 and sign in as Bob. The `DEFINE API` is refused, because only a system user may define things, but the `api::invoke` after it runs and returns only the two published posts. A caller who has not signed in is refused with `403 Forbidden`.
 
 ---
 
@@ -271,7 +271,7 @@ await db.signup({
 });
 
 // From here on, this connection is Cleo: only her own row and the published posts are visible
-const posts = await db.query("SELECT title FROM post ORDER BY title");
+const [posts] = await db.query("SELECT title FROM post ORDER BY title");
 ```
 
 </TabItem>
@@ -304,7 +304,7 @@ Disable Bob, and his next request is turned away even though his password is sti
   "id": "50790baffc4f907b5befbf3f",
   "state": {
     "queryState": {
-      "doc": "DEFINE ACCESS OVERWRITE account ON DATABASE TYPE RECORD\n    SIGNUP (\n        CREATE user CONTENT {\n            name:     $name,\n            email:    $email,\n            password: crypto::argon2::generate($password)\n        }\n    )\n    SIGNIN (\n        SELECT * FROM user\n        WHERE email = $email\n        AND crypto::argon2::compare(password, $password)\n    )\n    AUTHENTICATE {\n        IF !$auth.enabled {\n            THROW \"This account has been disabled\";\n        };\n        RETURN $auth;\n    }\n    DURATION FOR TOKEN 15m, FOR SESSION 12h;\n\nUPDATE user:bob SET enabled = false;\n\nSELECT name, enabled FROM user;",
+      "doc": "DEFINE ACCESS OVERWRITE account ON DATABASE TYPE RECORD\n    SIGNUP (\n        CREATE user CONTENT {\n            name:     $name,\n            email:    $email,\n            password: crypto::argon2::generate($password)\n        }\n    )\n    SIGNIN (\n        SELECT * FROM user\n        WHERE email = $email\n        AND crypto::argon2::compare(password, $password)\n    )\n    AUTHENTICATE {\n        IF !$auth.enabled {\n            THROW \"This account has been disabled\";\n        };\n        RETURN $auth;\n    }\n    DURATION FOR TOKEN 15m, FOR SESSION 12h;\n\nUPDATE user:bob SET enabled = false;\n\nSELECT name, enabled FROM user ORDER BY name;",
       "selection": {
         "ranges": [
           {

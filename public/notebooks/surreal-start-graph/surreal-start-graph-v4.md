@@ -85,7 +85,7 @@ Defining the edge table as a `RELATION` is optional, but `FROM person TO person`
   "id": "66dee756c306a37d4ea110d3",
   "state": {
     "queryState": {
-      "doc": "DEFINE TABLE OVERWRITE knows TYPE RELATION FROM person TO person;\nDEFINE TABLE OVERWRITE likes TYPE RELATION FROM person TO topic;\n\nRELATE person:ada->knows->person:bob   SET since = d'2021-03-01';\nRELATE person:ada->knows->person:cleo  SET since = d'2019-08-15';\nRELATE person:cleo->knows->person:ada  SET since = d'2019-08-15';\nRELATE person:bob->knows->person:dan   SET since = d'2022-01-10';\nRELATE person:cleo->knows->person:dan  SET since = d'2023-05-05';\nRELATE person:dan->knows->person:eve   SET since = d'2020-11-30';\nRELATE person:eve->knows->person:fay   SET since = d'2024-02-14';\n\nRELATE person:ada->likes->topic:graphs;\nRELATE person:bob->likes->topic:rust;\nRELATE person:cleo->likes->topic:graphs;\nRELATE person:dan->likes->topic:ai;\nRELATE person:eve->likes->topic:graphs;\nRELATE person:fay->likes->topic:rust;\n\nSELECT * FROM knows ORDER BY since;",
+      "doc": "DEFINE TABLE OVERWRITE knows TYPE RELATION FROM person TO person;\nDEFINE TABLE OVERWRITE likes TYPE RELATION FROM person TO topic;\n\nRELATE person:ada->knows->person:bob   SET since = d'2021-03-01';\nRELATE person:ada->knows->person:cleo  SET since = d'2019-08-15';\nRELATE person:cleo->knows->person:ada  SET since = d'2019-08-15';\nRELATE person:bob->knows->person:dan   SET since = d'2022-01-10';\nRELATE person:cleo->knows->person:dan  SET since = d'2023-05-05';\nRELATE person:dan->knows->person:eve   SET since = d'2020-11-30';\nRELATE person:eve->knows->person:fay   SET since = d'2024-02-14';\n\nRELATE person:ada->likes->topic:graphs;\nRELATE person:bob->likes->topic:rust;\nRELATE person:cleo->likes->topic:graphs;\nRELATE person:dan->likes->topic:ai;\nRELATE person:eve->likes->topic:graphs;\nRELATE person:fay->likes->topic:rust;\n\nSELECT * FROM knows ORDER BY since, in;",
       "selection": {
         "ranges": [
           {
@@ -173,7 +173,7 @@ An edge's fields are right there in the walk. A `WHERE` inside the arrows filter
   "id": "c4f8929cb7d77333fe4d318b",
   "state": {
     "queryState": {
-      "doc": "SELECT name, ->knows[WHERE since < d'2021-01-01']->person.name AS old_friends FROM person ORDER BY name;\n\nSELECT in.name AS from, out.name AS to, since FROM knows ORDER BY since;",
+      "doc": "SELECT name, ->knows[WHERE since < d'2021-01-01']->person.name AS old_friends FROM person ORDER BY name;\n\nSELECT in.name AS from, out.name AS to, since FROM knows ORDER BY since, from;",
       "selection": {
         "ranges": [
           {

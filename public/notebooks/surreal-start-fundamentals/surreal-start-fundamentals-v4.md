@@ -206,7 +206,7 @@ A link lives on one record and points one way. An **edge** is a record of its ow
 
 So far `person` has taken whatever it was given. `SCHEMAFULL` turns that around: only the fields you define are allowed, each with a type. `ASSERT` adds a rule a value must pass, `DEFAULT` fills in a field that was not given, and `option<...>` marks one that may be missing.
 
-`person` already holds records, and in a database created by SurrealDB 4.x a schema has to describe them too, not only what is written next. A new field whose type does not accept a missing value - `TYPE string`, say - is refused on a table that has records, until the statement says what those records hold. That is what `MIGRATE EXISTING ROWS` does: `USING $value` keeps the value a record already has, `FALLBACK` is what a record gets when it has none or its value does not fit, and `AS` names the migration so running this block again does not run it twice. The optional fields need no migration, because a missing value is already allowed.
+`person` already holds records, and in a database at compatibility level 4 - every database on a server that began on SurrealDB 4.x, rather than one upgraded from 3.x - a schema has to describe them too, not only what is written next. A new field whose type does not accept a missing value - `TYPE string`, say - is refused on a table that has records, until the statement says what those records hold. That is what `MIGRATE EXISTING ROWS` does: `USING $value` keeps the value a record already has, `FALLBACK` is what a record gets when it has none or its value does not fit, and `AS` names the migration so running this block again does not run it twice. The optional fields need no migration, because a missing value is already allowed.
 
 ```panel
 {
@@ -280,6 +280,9 @@ Without an index, a `WHERE` reads every record in the table. `DEFINE INDEX` buil
   }
 }
 ```
+
+> [!note]
+> A migration cannot rewrite a field that an index reads. From here on, if you run step 7 again, its `name` and `email` lines are refused. To run it again, first remove the two indexes with `REMOVE INDEX person_name ON person;` and `REMOVE INDEX person_email ON person;`, then run this block again after it.
 
 ---
 
@@ -366,7 +369,7 @@ A **function** wraps a query so every client asks the same way, and an **event**
 
 ## 12. Use it from your application
 
-Everything above works the same from code: connect, choose a namespace and database, send SurrealQL. The SDKs speak the language this guide is written in, so a query that works here works there. Use an SDK release that supports SurrealDB 4.x - for JavaScript, version 2.1 or later.
+Everything above works the same from code: connect, choose a namespace and database, send SurrealQL. The SDKs speak the language this guide is written in, so a query that works here works there. Use an SDK release that supports SurrealDB 4.x - version 2.1 or later of the JavaScript SDK, and 3.0 or later of the Python SDK.
 
 <Tabs>
 <TabItem label="JavaScript">
@@ -383,7 +386,7 @@ await db.connect("wss://<your-instance>/rpc", {
 
 await db.signin({ username: "<user>", password: "<password>" });
 
-const people = await db.query("SELECT name, works_at.name AS company FROM person ORDER BY name");
+const [people] = await db.query("SELECT name, works_at.name AS company FROM person ORDER BY name");
 ```
 
 </TabItem>
@@ -396,7 +399,8 @@ with Surreal("wss://<your-instance>/rpc") as db:
     db.signin({"username": "<user>", "password": "<password>"})
     db.use("<your-namespace>", "<your-database>")
 
-    people = db.query("SELECT name, works_at.name AS company FROM person ORDER BY name")
+    # .first() runs the query and returns the first statement's result
+    people = db.query("SELECT name, works_at.name AS company FROM person ORDER BY name").first()
 ```
 
 </TabItem>
